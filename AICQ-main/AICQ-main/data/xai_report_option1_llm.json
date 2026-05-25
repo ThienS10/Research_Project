@@ -1,0 +1,73 @@
+{
+  "option": "option1_llm",
+  "created_utc": "2026-05-25T13:49:17.712623Z",
+  "steps": [
+    {
+      "title": "Start",
+      "details": {
+        "csv_in_path": "C:\\Users\\Sthie\\OneDrive\\Desktop\\Research Project\\Codex\\AICQ-main\\AICQ-main\\data/Book2_option1_llm.csv",
+        "csv_copy_out_path": "C:\\Users\\Sthie\\OneDrive\\Desktop\\Research Project\\Codex\\AICQ-main\\AICQ-main\\data/Book2_option1_llm.csv",
+        "json_out_path": "C:\\Users\\Sthie\\OneDrive\\Desktop\\Research Project\\Codex\\AICQ-main\\AICQ-main\\data/Book2_option1_llm.json"
+      },
+      "ts": "2026-05-25T13:49:06.781849Z"
+    },
+    {
+      "title": "Prepared CSV copy",
+      "details": {
+        "csv_copy_out_path": "C:\\Users\\Sthie\\OneDrive\\Desktop\\Research Project\\Codex\\AICQ-main\\AICQ-main\\data/Book2_option1_llm.csv"
+      },
+      "ts": "2026-05-25T13:49:06.795271Z"
+    },
+    {
+      "title": "CSV->JSON",
+      "details": {
+        "json_out_path": "C:\\Users\\Sthie\\OneDrive\\Desktop\\Research Project\\Codex\\AICQ-main\\AICQ-main\\data/Book2_option1_llm.json",
+        "rows": 27
+      },
+      "ts": "2026-05-25T13:49:06.800497Z"
+    },
+    {
+      "title": "LLM classification",
+      "details": {
+        "count": 27,
+        "log": "C:\\Users\\Sthie\\OneDrive\\Desktop\\Research Project\\Codex\\AICQ-main\\AICQ-main\\data\\moisture_classification_option1_llm.csv"
+      },
+      "ts": "2026-05-25T13:49:09.050132Z"
+    },
+    {
+      "title": "Injected moisture_label",
+      "details": {
+        "json_ready": "C:\\Users\\Sthie\\OneDrive\\Desktop\\Research Project\\Codex\\AICQ-main\\AICQ-main\\data/Book2_option1_llm.json"
+      },
+      "ts": "2026-05-25T13:49:09.065048Z"
+    },
+    {
+      "title": "Model backend",
+      "details": {
+        "backend": "local_joblib",
+        "endpoint": ""
+      },
+      "ts": "2026-05-25T13:49:09.065062Z"
+    },
+    {
+      "title": "Pipeline finished",
+      "details": {
+        "predictions": "C:\\Users\\Sthie\\OneDrive\\Desktop\\Research Project\\Codex\\AICQ-main\\AICQ-main\\aws_bedrock_agent\\../prediction_vs_ndg_option1_llm.csv",
+        "summary": "C:\\Users\\Sthie\\OneDrive\\Desktop\\Research Project\\Codex\\AICQ-main\\AICQ-main\\aws_bedrock_agent\\../final_results_option1_llm.txt"
+      },
+      "ts": "2026-05-25T13:49:17.712602Z"
+    },
+    {
+      "title": "Artifacts",
+      "details": {
+        "uploaded_to_s3": false,
+        "paths": [
+          "C:\\Users\\Sthie\\OneDrive\\Desktop\\Research Project\\Codex\\AICQ-main\\AICQ-main\\data\\moisture_classification_option1_llm.csv",
+          "C:\\Users\\Sthie\\OneDrive\\Desktop\\Research Project\\Codex\\AICQ-main\\AICQ-main\\aws_bedrock_agent\\../prediction_vs_ndg_option1_llm.csv",
+          "C:\\Users\\Sthie\\OneDrive\\Desktop\\Research Project\\Codex\\AICQ-main\\AICQ-main\\aws_bedrock_agent\\../final_results_option1_llm.txt"
+        ]
+      },
+      "ts": "2026-05-25T13:49:17.712619Z"
+    }
+  ]
+}

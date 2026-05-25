@@ -1,0 +1,22 @@
+RBF Kernel Avg R²: -7.1583, Avg RMSE: 0.0880
+Rational Quadratic Kernel Avg R²: -2.5415, Avg RMSE: 0.0585
+Matern (ν=1.5) Kernel Avg R²: -2.5743, Avg RMSE: 0.0589
+Matern (ν=0.5) Kernel Avg R²: -2.6480, Avg RMSE: 0.0597
+Matern (ν=2.5) Kernel Avg R²: -2.5587, Avg RMSE: 0.0587
+Exp-Sine-Squared Kernel Avg R²: -2.6243, Avg RMSE: 0.0595
+Dot-Product Kernel Avg R²: -0.1018, Avg RMSE: 0.0332
+Dot-Product + RBF Kernel Avg R²: -0.0947, Avg RMSE: 0.0331
+Dot-Product * Rational Quadratic Kernel Avg R²: -0.1018, Avg RMSE: 0.0332
+Dot-Product + Matern (ν=1.5) Kernel Avg R²: -0.1029, Avg RMSE: 0.0332
+Dot-Product * Matern (ν=2.5) Kernel Avg R²: -0.1018, Avg RMSE: 0.0332
+RBF + WhiteKernel Kernel Avg R²: -7.1583, Avg RMSE: 0.0880
+Rational Quadratic + WhiteKernel Kernel Avg R²: -2.1233, Avg RMSE: 0.0543
+RBF * Rational Quadratic Kernel Avg R²: -7.1583, Avg RMSE: 0.0880
+Matern (ν=1.5) * RBF Kernel Avg R²: -7.4107, Avg RMSE: 0.0893
+Matern (ν=0.5) + RBF Kernel Avg R²: -3.5419, Avg RMSE: 0.0667
+Matern (ν=2.5) * Rational Quadratic Kernel Avg R²: -2.5417, Avg RMSE: 0.0585
+Additive (RBF + WhiteKernel) Kernel Avg R²: -7.4108, Avg RMSE: 0.0893
+Additive (Rational Quadratic + WhiteKernel) Kernel Avg R²: -2.1233, Avg RMSE: 0.0543
+Multiplicative (RBF * Matern) Kernel Avg R²: -7.4107, Avg RMSE: 0.0893
+
+Best Kernel: Dot-Product + RBF with Avg R²: -0.0947, Avg RMSE: 0.0331

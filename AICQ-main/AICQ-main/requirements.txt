@@ -1,0 +1,14 @@
+boto3>=1.34.0
+botocore>=1.34.0
+fastapi>=0.111.0
+uvicorn[standard]>=0.30.0
+pydantic>=2.7.0
+pandas==2.2.3
+numpy==1.26.4
+scikit-learn==1.4.2
+scipy==1.11.4
+joblib>=1.4.0
+mangum>=0.17.0
+pyswarm>=0.6.0
+bottleneck>=1.6.0
+numexpr==2.8.7

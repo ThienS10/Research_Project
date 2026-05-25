@@ -1,0 +1,3 @@
+Matern (ν=1.5) Kernel Avg R²: -6.2696, Avg RMSE: 0.0857
+
+Best Kernel: Matern (ν=1.5) with Avg R²: -6.2696, Avg RMSE: 0.0857

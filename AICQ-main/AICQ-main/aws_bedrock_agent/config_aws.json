@@ -1,0 +1,12 @@
+{
+  "aws_region": "us-east-1",
+  "bedrock": {
+    "model_id": "anthropic.claude-3-5-sonnet-20240620-v1:0",
+    "temperature": 0.0,
+    "max_tokens": 64
+  },
+  "moisture": {
+    "labels": ["dry", "medium", "wet"],
+    "map_to_internal": {"dry": "low", "medium": "medium", "wet": "high"}
+  }
+}

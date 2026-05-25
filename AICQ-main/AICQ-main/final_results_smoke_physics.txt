@@ -1,0 +1,7 @@
+Final R2 on holdout with physics-based residual ML: 0.4734
+Final RMSE on holdout with physics-based residual ML: 0.0426
+Best residual kernel: Dot-Product
+Global Pnet: 499.980046
+Elastic physics enabled: True
+Unique Gmax feature values on holdout: 18
+Repeated predicted density count at 6 decimals: 0

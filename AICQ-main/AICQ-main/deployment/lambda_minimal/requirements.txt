@@ -1,0 +1,2 @@
+# Minimal Lambda bundle intentionally avoids optional heavy libraries.
+# No third-party packages are required because boto3/botocore ship with Lambda.

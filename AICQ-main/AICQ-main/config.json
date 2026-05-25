@@ -1,0 +1,95 @@
+{
+  "soil": {
+    "Gs": 2.7,
+    "alpha": 0.8,
+    "m": 0.5,
+    "n": 1.2,
+    "Pa": 101.325
+  },
+  "elastic_physics": {
+    "enabled": true,
+    "gmax_coefficient": 0.066,
+    "gmax_void_ratio_exponent": -4.67,
+    "gmax_stress_exponent": 0.39,
+    "bulk_k0": 150.0,
+    "gmax_to_modulus_factor": 1.0,
+    "pa_to_modulus_factor": 0.001,
+    "bulk_to_modulus_factor": 1.0,
+    "void_ratio_min": 0.25,
+    "void_ratio_max": 0.75,
+    "saturation_min": 0.001,
+    "saturation_max": 0.999,
+    "pressure_ratio_min": 0.001,
+    "pressure_ratio_max": 1000.0,
+    "pnet_initial": 50.0,
+    "pnet_min": 1.0,
+    "pnet_max": 500.0,
+    "pnet_tol": 0.01,
+    "gmax_min": 0.000001,
+    "gmax_max": 1000000.0,
+    "bulk_min": 0.000001,
+    "bulk_max": 1000000.0,
+    "feature_transform": "log1p"
+  },
+  "physics": {
+    "initial_void_ratio_guess": 0.35
+  },
+  "swcc": {
+    "n": 0.28,
+    "m": 0.98,
+    "a": 0.0102,
+    "omega": 10.6
+  },
+  "data": {
+    "csv_option1": "data/Book2_option1_llm.csv",
+    "csv_option2": "data/Book2_option2_llm.csv",
+    "json_option1": "data/Book2_option1_llm.json",
+    "json_option2": "data/Book2_option2_llm.json"
+  },
+  "model": {
+    "path": "gpr_model_constrained3.joblib"
+  },
+  "omc": {
+    "offset": 0.5
+  },
+  "moisture": {
+    "default_label": "medium"
+  },
+  "threshold": 2.110835,
+  "seed": 44,
+  "pso": {
+    "swarmsize": 100,
+    "omega": 0.5,
+    "phip": 0.5,
+    "phig": 0.5,
+    "maxiter": 100,
+    "debug": false,
+    "lb_void_ratio": 0.25,
+    "ub_void_ratio": 0.5
+  },
+  "gpr": {
+    "n_restarts_optimizer": 10,
+    "alpha": 0.01
+  },
+  "cv": {
+    "splits": 3
+  },
+  "alpha": {
+    "initial": 0.5,
+    "min": 0.0,
+    "max": 1.0
+  },
+  "golden_section": {
+    "tol": 0.01
+  },
+  "plotting": {
+    "font_family": "Times New Roman",
+    "font_size": 18,
+    "fig_width": 9,
+    "fig_height": 4.5
+  },
+  "logging": {
+    "file": "run.log",
+    "append": true
+  }
+}
