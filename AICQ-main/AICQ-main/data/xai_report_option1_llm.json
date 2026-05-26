@@ -1,6 +1,6 @@
 {
   "option": "option1_llm",
-  "created_utc": "2026-05-25T13:49:17.712623Z",
+  "created_utc": "2026-05-26T02:49:56.303407Z",
   "steps": [
     {
       "title": "Start",
@@ -9,14 +9,14 @@
         "csv_copy_out_path": "C:\\Users\\Sthie\\OneDrive\\Desktop\\Research Project\\Codex\\AICQ-main\\AICQ-main\\data/Book2_option1_llm.csv",
         "json_out_path": "C:\\Users\\Sthie\\OneDrive\\Desktop\\Research Project\\Codex\\AICQ-main\\AICQ-main\\data/Book2_option1_llm.json"
       },
-      "ts": "2026-05-25T13:49:06.781849Z"
+      "ts": "2026-05-26T02:49:47.322945Z"
     },
     {
       "title": "Prepared CSV copy",
       "details": {
         "csv_copy_out_path": "C:\\Users\\Sthie\\OneDrive\\Desktop\\Research Project\\Codex\\AICQ-main\\AICQ-main\\data/Book2_option1_llm.csv"
       },
-      "ts": "2026-05-25T13:49:06.795271Z"
+      "ts": "2026-05-26T02:49:47.334637Z"
     },
     {
       "title": "CSV->JSON",
@@ -24,7 +24,7 @@
         "json_out_path": "C:\\Users\\Sthie\\OneDrive\\Desktop\\Research Project\\Codex\\AICQ-main\\AICQ-main\\data/Book2_option1_llm.json",
         "rows": 27
       },
-      "ts": "2026-05-25T13:49:06.800497Z"
+      "ts": "2026-05-26T02:49:47.339343Z"
     },
     {
       "title": "LLM classification",
@@ -32,14 +32,14 @@
         "count": 27,
         "log": "C:\\Users\\Sthie\\OneDrive\\Desktop\\Research Project\\Codex\\AICQ-main\\AICQ-main\\data\\moisture_classification_option1_llm.csv"
       },
-      "ts": "2026-05-25T13:49:09.050132Z"
+      "ts": "2026-05-26T02:49:49.496141Z"
     },
     {
       "title": "Injected moisture_label",
       "details": {
         "json_ready": "C:\\Users\\Sthie\\OneDrive\\Desktop\\Research Project\\Codex\\AICQ-main\\AICQ-main\\data/Book2_option1_llm.json"
       },
-      "ts": "2026-05-25T13:49:09.065048Z"
+      "ts": "2026-05-26T02:49:49.509240Z"
     },
     {
       "title": "Model backend",
@@ -47,7 +47,7 @@
         "backend": "local_joblib",
         "endpoint": ""
       },
-      "ts": "2026-05-25T13:49:09.065062Z"
+      "ts": "2026-05-26T02:49:49.509256Z"
     },
     {
       "title": "Pipeline finished",
@@ -55,7 +55,7 @@
         "predictions": "C:\\Users\\Sthie\\OneDrive\\Desktop\\Research Project\\Codex\\AICQ-main\\AICQ-main\\aws_bedrock_agent\\../prediction_vs_ndg_option1_llm.csv",
         "summary": "C:\\Users\\Sthie\\OneDrive\\Desktop\\Research Project\\Codex\\AICQ-main\\AICQ-main\\aws_bedrock_agent\\../final_results_option1_llm.txt"
       },
-      "ts": "2026-05-25T13:49:17.712602Z"
+      "ts": "2026-05-26T02:49:56.303385Z"
     },
     {
       "title": "Artifacts",
@@ -67,7 +67,7 @@
           "C:\\Users\\Sthie\\OneDrive\\Desktop\\Research Project\\Codex\\AICQ-main\\AICQ-main\\aws_bedrock_agent\\../final_results_option1_llm.txt"
         ]
       },
-      "ts": "2026-05-25T13:49:17.712619Z"
+      "ts": "2026-05-26T02:49:56.303403Z"
     }
   ]
 }

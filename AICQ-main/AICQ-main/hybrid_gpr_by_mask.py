@@ -11,7 +11,7 @@ from helper_hybrid import (
     calculate_elastic_state_array,
     calculate_rmse,
     load_gpr_model,
-    optimize_global_pnet,
+    optimize_global_mean_stress_beta,
     train_and_evaluate_gpr_kernels,
     void_ratio_to_density,
 )
@@ -78,7 +78,8 @@ def run_option(option_name: str, csv_path: str, json_path: str, cfg, gpr_model):
         json_ready, cfg['moisture']['default_label']
     )
 
-    global_pnet = optimize_global_pnet(lwd_av, moisture_numeric_array, ndg_density, used_mask, cfg)
+    mean_stress = optimize_global_mean_stress_beta(lwd_av, moisture_numeric_array, ndg_density, used_mask, cfg)
+    global_pnet = mean_stress['pnet']
     physics_state = calculate_elastic_state_array(lwd_av, moisture_numeric_array, global_pnet, cfg)
     physical_density = np.array([
         void_ratio_to_density(e_value, moisture)
@@ -122,6 +123,12 @@ def run_option(option_name: str, csv_path: str, json_path: str, cfg, gpr_model):
         'Estimated_Void_Ratio': physics_state['void_ratio'][hold_mask],
         'Estimated_Saturation': physics_state['saturation'][hold_mask],
         'Global_Pnet': np.full(np.sum(hold_mask), global_pnet),
+        'Global_Beta': np.full(np.sum(hold_mask), mean_stress['beta']),
+        'Mean_Stress_Offset_kPa': np.full(np.sum(hold_mask), mean_stress['stress_offset_kpa']),
+        'Unit_Weight_kN_m3': np.full(np.sum(hold_mask), mean_stress['unit_weight_kn_m3']),
+        'Overburden_Mean_kPa': np.full(np.sum(hold_mask), mean_stress['overburden_mean_kpa']),
+        'LWD_Contact_kPa': np.full(np.sum(hold_mask), mean_stress['lwd_contact_kpa']),
+        'LWD_Mean_kPa': np.full(np.sum(hold_mask), mean_stress['lwd_mean_kpa']),
         'Effective_Pressure': physics_state['effective_pressure'][hold_mask],
         'Gmax_Raw': physics_state['gmax_raw'][hold_mask],
         'Gmax_Scaled': physics_state['gmax'][hold_mask],
@@ -142,6 +149,12 @@ def run_option(option_name: str, csv_path: str, json_path: str, cfg, gpr_model):
         f.write(f'Final RMSE on holdout with physics-based residual ML: {rmse:.4f}\n')
         f.write(f'Best residual kernel: {best_kernel_name}\n')
         f.write(f'Global Pnet: {global_pnet:.6f}\n')
+        f.write(f'Global beta: {mean_stress["beta"]:.6f}\n')
+        f.write(f'Mean stress offset: {mean_stress["stress_offset_kpa"]:.6f} kPa\n')
+        f.write(f'Unit weight: {mean_stress["unit_weight_kn_m3"]:.6f} kN/m3\n')
+        f.write(f'Overburden mean stress: {mean_stress["overburden_mean_kpa"]:.6f} kPa\n')
+        f.write(f'LWD contact stress: {mean_stress["lwd_contact_kpa"]:.6f} kPa\n')
+        f.write(f'LWD mean stress contribution at beta=1: {mean_stress["lwd_mean_kpa"]:.6f} kPa\n')
         f.write(f'Gmax scale factor: {float(cfg.get("elastic_physics", {}).get("gmax_to_modulus_factor", 1.0)):.6g}\n')
         f.write(f'Pa to modulus factor: {float(cfg.get("elastic_physics", {}).get("pa_to_modulus_factor", 0.001)):.6g}\n')
         f.write(f'Bulk scale factor: {float(cfg.get("elastic_physics", {}).get("bulk_to_modulus_factor", 1.0)):.6g}\n')

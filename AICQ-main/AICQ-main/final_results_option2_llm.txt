@@ -1,10 +1,15 @@
-Final R2 on holdout with physics-based residual ML: 0.5882
-Final RMSE on holdout with physics-based residual ML: 0.0283
-Best residual kernel: Dot-Product
-Global Pnet: 499.980046
+Final R2 on holdout with physics-based residual ML: -0.0561
+Final RMSE on holdout with physics-based residual ML: 0.0454
+Best residual kernel: Dot-Product + RBF
+Global Pnet: 43.017633
+Global beta: 0.999831
+Unit weight: 20.617937 kN/m3
+Overburden mean stress: 12.370762 kPa
+LWD contact stress: 91.956189 kPa
+LWD mean stress contribution at beta=1: 30.652063 kPa
 Gmax scale factor: 1
 Pa to modulus factor: 0.001
 Bulk scale factor: 1
 Elastic physics enabled: True
-Unique Gmax feature values on holdout: 9
+Unique Gmax feature values on holdout: 8
 Repeated predicted density count at 6 decimals: 0

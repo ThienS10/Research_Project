@@ -31,6 +31,21 @@
     "bulk_max": 1000000.0,
     "feature_transform": "log1p"
   },
+  "mean_stress": {
+    "enabled": true,
+    "testbed_depth_m": 0.6,
+    "lwd_peak_load_kn": 6.5,
+    "lwd_plate_radius_m": 0.15,
+    "mean_stress_offset_kpa": 0.0,
+    "earth_pressure_mean_factor": 1.0,
+    "lwd_mean_stress_divisor": 3.0,
+    "beta_initial": 1.0,
+    "beta_min": 0.0,
+    "beta_max": 2.0,
+    "beta_tol": 0.0001,
+    "unit_weight_density_source": "training_ndg_mean",
+    "density_for_unit_weight_t_m3": 2.0
+  },
   "physics": {
     "initial_void_ratio_guess": 0.35
   },

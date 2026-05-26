@@ -1,6 +1,6 @@
-Final R2 on holdout with physics-based residual ML: -0.0190
-Final RMSE on holdout with physics-based residual ML: 0.0593
-Best residual kernel: Dot-Product + RBF
+Final R2 on holdout with physics-based residual ML: 0.4586
+Final RMSE on holdout with physics-based residual ML: 0.0432
+Best residual kernel: Dot-Product
 Global Pnet: 42.999327
 Global beta: 0.999831
 Unit weight: 20.587427 kN/m3

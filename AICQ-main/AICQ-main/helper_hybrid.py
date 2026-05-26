@@ -315,8 +315,116 @@ def calculate_elastic_state_array(elwd_array, moisture_percent_array, pnet, cfg=
     return {key: np.array([state[key] for state in states], dtype=float) for key in states[0]}
 
 
+def _mean_stress_cfg(cfg=None):
+    """Read mean-effective-stress configuration."""
+    cfg = cfg or get_config()
+    return cfg.get("mean_stress", {})
+
+
+def calculate_lwd_contact_pressure(cfg=None):
+    """Calculate LWD vertical contact stress q = F / A in kPa."""
+    mean_cfg = _mean_stress_cfg(cfg)
+    peak_load_kn = float(mean_cfg.get("lwd_peak_load_kn", 6.5))
+    plate_radius_m = max(float(mean_cfg.get("lwd_plate_radius_m", 0.15)), 1e-9)
+    plate_area_m2 = np.pi * plate_radius_m ** 2
+    return float(peak_load_kn / plate_area_m2)
+
+
+def estimate_unit_weight_kn_m3(ndg_density_array=None, used_mask=None, cfg=None):
+    """Estimate unit weight from density in t/m3, returning kN/m3."""
+    mean_cfg = _mean_stress_cfg(cfg)
+    source = str(mean_cfg.get("unit_weight_density_source", "training_ndg_mean")).lower()
+    density_t_m3 = float(mean_cfg.get("density_for_unit_weight_t_m3", 2.0))
+    if source == "training_ndg_mean" and ndg_density_array is not None and used_mask is not None:
+        used_mask = np.asarray(used_mask, dtype=bool)
+        density_values = np.asarray(ndg_density_array, dtype=float)[used_mask]
+        density_values = density_values[np.isfinite(density_values)]
+        if density_values.size:
+            density_t_m3 = float(np.mean(density_values))
+    return density_t_m3 * 9.80665
+
+
+def formulate_mean_effective_pnet(beta, unit_weight_kn_m3, cfg=None):
+    """Formulate Pnet as mean overburden plus LWD-induced mean stress."""
+    mean_cfg = _mean_stress_cfg(cfg)
+    depth_m = float(mean_cfg.get("testbed_depth_m", 0.6))
+    stress_offset_kpa = float(mean_cfg.get("mean_stress_offset_kpa", 0.0))
+    earth_factor = float(mean_cfg.get("earth_pressure_mean_factor", 1.0))
+    lwd_divisor = max(float(mean_cfg.get("lwd_mean_stress_divisor", 3.0)), 1e-9)
+    overburden_mean_kpa = earth_factor * unit_weight_kn_m3 * depth_m
+    lwd_contact_kpa = calculate_lwd_contact_pressure(cfg)
+    lwd_mean_kpa = lwd_contact_kpa / lwd_divisor
+    pnet = stress_offset_kpa + overburden_mean_kpa + float(beta) * lwd_mean_kpa
+    return {
+        "pnet": float(max(pnet, 0.0)),
+        "beta": float(beta),
+        "stress_offset_kpa": float(stress_offset_kpa),
+        "unit_weight_kn_m3": float(unit_weight_kn_m3),
+        "overburden_mean_kpa": float(overburden_mean_kpa),
+        "lwd_contact_kpa": float(lwd_contact_kpa),
+        "lwd_mean_kpa": float(lwd_mean_kpa),
+    }
+
+
+def optimize_global_mean_stress_beta(elwd_array, moisture_percent_array, ndg_density_array, used_mask, cfg=None):
+    """Calibrate beta in Pnet = gamma*z + beta*q_lwd/3 using training rows."""
+    cfg = cfg or get_config()
+    mean_cfg = _mean_stress_cfg(cfg)
+    elastic_cfg = cfg.get("elastic_physics", {})
+    if not bool(mean_cfg.get("enabled", True)):
+        pnet = float(elastic_cfg.get("pnet_initial", 50.0))
+        return {
+            "pnet": pnet,
+            "beta": np.nan,
+            "unit_weight_kn_m3": np.nan,
+            "overburden_mean_kpa": np.nan,
+            "lwd_contact_kpa": np.nan,
+            "lwd_mean_kpa": np.nan,
+        }
+
+    used_mask = np.asarray(used_mask, dtype=bool)
+    elwd_train = np.asarray(elwd_array, dtype=float)[used_mask]
+    moisture_train = np.asarray(moisture_percent_array, dtype=float)[used_mask]
+    density_train = np.asarray(ndg_density_array, dtype=float)[used_mask]
+    unit_weight = estimate_unit_weight_kn_m3(ndg_density_array, used_mask, cfg)
+
+    def objective(beta_value):
+        stress = formulate_mean_effective_pnet(beta_value, unit_weight, cfg)
+        states = calculate_elastic_state_array(elwd_train, moisture_train, stress["pnet"], cfg)
+        physics_density = np.array([
+            void_ratio_to_density(e_value, moisture)
+            for e_value, moisture in zip(states["void_ratio"], moisture_train)
+        ])
+        return calculate_rmse(density_train, physics_density)
+
+    beta_min = float(mean_cfg.get("beta_min", 0.0))
+    beta_max = float(mean_cfg.get("beta_max", 1.0))
+    grid = np.linspace(beta_min, beta_max, 25)
+    errors = np.array([objective(beta_value) for beta_value in grid])
+    best_idx = int(np.argmin(errors))
+    lo = grid[max(best_idx - 1, 0)]
+    hi = grid[min(best_idx + 1, len(grid) - 1)]
+    if hi > lo:
+        beta = float(golden_section_search(objective, float(lo), float(hi), float(mean_cfg.get("beta_tol", 0.0001))))
+    else:
+        beta = float(grid[best_idx])
+    return formulate_mean_effective_pnet(beta, unit_weight, cfg)
+
+
 def optimize_global_pnet(elwd_array, moisture_percent_array, ndg_density_array, used_mask, cfg=None):
-    """Calibrate one global Pnet by minimizing training-row physics-density RMSE."""
+    """Backward-compatible wrapper returning mean-stress-derived Pnet."""
+    mean_stress = optimize_global_mean_stress_beta(
+        elwd_array,
+        moisture_percent_array,
+        ndg_density_array,
+        used_mask,
+        cfg,
+    )
+    return mean_stress["pnet"]
+
+
+def optimize_free_global_pnet(elwd_array, moisture_percent_array, ndg_density_array, used_mask, cfg=None):
+    """Calibrate one free global Pnet by minimizing training-row physics-density RMSE."""
     _, elastic_cfg = _elastic_cfg(cfg)
     if not bool(elastic_cfg.get("enabled", True)):
         return float(elastic_cfg.get("pnet_initial", 50.0))
